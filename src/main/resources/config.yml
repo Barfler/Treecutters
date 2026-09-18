@@ -1,0 +1,62 @@
+# === World / room layout ===
+# The world that rooms/arenas are placed in.
+world: world
+
+# The player's personal arena is a WorldEdit schematic pasted at their
+# assigned room position. Put your .schem file in plugins/Treecutters/schematics/.
+schematic:
+  file: room.schem
+  # Offset (relative to the room position) that the schematic's origin is pasted at.
+  offsetX: -25
+  offsetY: -3
+  offsetZ: -25
+  ignoreAirBlocks: false
+
+# The shared city hub is a WorldEdit schematic pasted once at a fixed location, rather than
+# per-player like the room schematic above. Put your .schem file in plugins/Treecutters/schematics/.
+# Paste it with /ttc pastecity - it is not pasted automatically, since it's a one-time world
+# edit at a fixed location you control.
+citySchematic:
+  file: city.schem
+  # Absolute world coordinates the schematic's origin is pasted at.
+  x: 0
+  y: 4
+  z: 0
+  ignoreAirBlocks: false
+
+# Grid of room slots rooms are handed out from, one per player.
+roomGrid:
+  startX: 25
+  endX: 250
+  stepX: 70
+  startZ: 25
+  endZ: 250
+  stepZ: 70
+  startY: 35
+  endY: 219
+  stepY: 70
+
+# Fixed shared-world locations (the "city" hub). Update these to match your build.
+locations:
+  citySpawn: { x: 73.4768, y: 5, z: 54.5637, yaw: 1.86, pitch: -90.99 }
+  stocksWarp: { x: 97.8883, y: 4, z: 44.4137, yaw: 0.45, pitch: -88.75 }
+  stockBuySign: { x: 103, y: 5, z: 41 }
+  stockSellSign: { x: 103, y: 5, z: 47 }
+  stockValueSign: { x: 101, y: 4, z: 44 }
+  stockChart: { x: 107, y: 4, z: 40 }
+  weatherMachineBlock: { x: 101, y: 6, z: 62 }
+  weatherLightning: { x: 101, y: 14, z: 62 }
+
+# Fixed wood types that count as "logs" for mining/whitelisting.
+woodTypes:
+  - stripped_oak_wood
+  - stripped_spruce_wood
+  - stripped_cherry_wood
+  - stripped_warped_stem
+  - stripped_crimson_stem
+  - stripped_pale_oak_wood
+  - pale_oak_wood
+  - stripped_birch_wood
+  - stripped_dark_oak_wood
+  - oak_wood
+  - stripped_acacia_wood

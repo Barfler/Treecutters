@@ -1,0 +1,374 @@
+discord:
+  invite-url: "https://discord.gg/your-invite-here"
+  link-message: "<click:open_url:'%url%'><aqua>%url%</aqua></click>"
+
+join:
+  welcome:
+    - ""
+    - ""
+    - "<green>Welcome to Treecutting!"
+    - "<dark_gray>- <gray>Swap Hands to open your upgrade menu."
+    - "<dark_gray>- <gray>Right Click to throw your axe."
+    - "<dark_gray>- <gray>You can double jump mid-air."
+    - "<yellow>Enjoy!"
+    - ""
+    - ""
+  no-rooms-kick: "<red>No free rooms are available right now, sorry!"
+
+items:
+  axe-name: "<white>\U0001FA93 Axe"
+
+gui:
+  upgrades:
+    title: "Upgrades"
+    home-icon-name: "<green>Home"
+    home-icon-lore:
+      - "<gray>Your Home Base with your tree."
+      - ""
+      - "<yellow>Click to warp!"
+    city-icon-name: "<gold>The City"
+    city-icon-lore:
+      - "<gray>The City is a global hub for all players"
+      - "<gray>to meet, communicate, and trade."
+      - ""
+      - "<yellow>Click to warp!"
+    settings-icon-name: "<gray>Settings"
+    update-icon-name: "<gray>Update Log"
+    leaderboard-icon-name: "<gold>Leaderboard"
+    upgrade-level-line: "<dark_gray>Level %level%<dark_gray>/%max%"
+    prestige-header: ""
+    prestige-title: "<green><bold>PRESTREEIGE!"
+    prestige-line1: "<gray>Buying this upgrade will <red>reset"
+    prestige-line2: "<gray>your current logs."
+    cost-line: "<gray>Costs <green>%cost% <gray>logs to upgrade."
+    click-to-upgrade: "<yellow>Click to upgrade!"
+    maxed: "<yellow><bold>MAXED!"
+  settings:
+    title: "Settings"
+    selected-option: "<blue>> <aqua>%option%"
+    unselected-option: "<dark_gray>> <gray>%option%"
+  updatelog:
+    title: "Update Log"
+
+leaderboard:
+  types:
+    tree_type: "Tree Type Level"
+    chat_wins: "Chat Wins"
+    true_logs: "True Logs Broken"
+    weather_donations: "Weather Machine Donation Amount"
+    playtime: "Playtime (in Minutes)"
+  type-line: "<gray>Type: <yellow>%type%"
+  entry: "<dark_gray>%rank%. %tag% <white>%name%: <green>%value%"
+  switch-hint: "<yellow>Click to switch leaderboards!"
+
+tablist:
+  header-title: "<green><bold>TREECUTTING"
+  entry: "%tag% <#dddddd>%player% <dark_gray>%logs%"
+  players-online: "<gray>Players Online: <aqua>%count%"
+  weather-header: "<aqua><bold>WEATHER MACHINE"
+  weather-status:
+    inactive: "<gray>Status: <red>Inactive"
+    rain: "<gray>Status: <aqua>Rain"
+    thunderstorm: "<gray>Status: <blue>Thunderstorm"
+    severe-thunderstorm: "<gray>Status: <dark_red>Severe Thunderstorm"
+    hurricane: "<gray>Status: <dark_blue>Hurricane"
+
+actionbar:
+  logs: "<dark_green>╠ <green>%logs% Logs"
+  logs-per-second: "<green>+%amount%/s"
+  stock-price: "<gray>Stock Price: <green>%price%"
+  percent-complete: "<gray>%percent%%"
+  separator: " <dark_gray>| "
+  combo-title: "Combo: %combo%"
+
+tips:
+  header: "<gold><bold>DID YOU KNOW? <reset><gray>%tip%"
+  list:
+    - "You can Swap Hands to open your upgrade menu!"
+    - "You can double jump mid-air, if you have a high enough Jump Boost!"
+    - "This is a fan-made port of the open-source game at https://github.com/akarahdev/treecutters"
+    - "Meowing in chat gives you a tiny chance to instantly get a billion logs."
+    - "Use /discord to join the Discord server."
+
+chatgames:
+  quick-math:
+    header: "QUICK MATH!"
+    prompt-add: "Solve %a% + %b% * %c%."
+    prompt-mul: "Solve %a% * %b% * %c%."
+    prompt-sub: "Solve %a% * %b% - %c%."
+  guess-number:
+    header: "GUESS THE NUMBER!"
+    prompt: "A number from 1 to 200 has been selected. Guess it!"
+    too-small: "<gray>The guess %guess% is too small."
+    too-big: "<gray>The guess %guess% is too big."
+  syllogism:
+    header: "SYLLOGISM!"
+    prompt: "What is `%question%`?"
+    entries:
+      "DF": "DiamondFire"
+      "HTML": "Hypertext Markup Language"
+      "6!": "720"
+      "LASER": "Light Amplification by Stimulated Emission of Radiation"
+      "CEO": "Chief Executive Officer"
+      "All humans are mortal. Socrates is human, therefore...": "Socrates is mortal"
+      "If it rains, the grass gets wet. It is raining, therefore...": "the grass is wet"
+  riddle:
+    header: "RIDDLE!"
+    prompt: "%question%"
+    entries:
+      "What has a face, but can't smile?": "Clock"
+      "What has many keys, but can't open a single lock?": "Piano"
+      "What lives if you feed it, but dies if you give it a drink?": "Fire"
+      "What has a head and a tail, but no body?": "Coin"
+      "What can you catch, but not throw?": "A cold"
+  scramble:
+    header: "QUICK SCRAMBLE!"
+    prompt: "Unscramble the word '%scrambled%'!"
+    words:
+      - apple
+      - almond
+      - aspen
+      - baobab
+      - birch
+      - bodhi
+      - bark
+      - cedar
+      - cherry
+      - coconut
+      - chestnut
+      - elderberry
+      - fir
+      - forest
+      - grove
+      - grapefruit
+      - haw
+      - holly
+      - jungle
+      - maple
+      - nectarine
+      - oak
+      - palm
+      - rainforest
+      - rubber
+      - spruce
+      - walnut
+      - willow
+      - sprout
+      - sprouting
+      - flower
+      - flowering
+      - birches
+      - felled
+      - chopped
+      - cut
+      - treecutting
+      - bonsai
+      - shrubs
+      - arboreal
+      - evergreen
+      - poplars
+      - leafless
+      - cedars
+      - grapevines
+      - deciduous
+      - undergrowth
+      - eucalyptus
+      - persimmon
+      - pines
+      - bushes
+      - fruit
+      - pruned
+      - mango
+      - dwarfed
+      - trunks
+      - leaves
+  winner: "<green><bold>WINNER! <reset><aqua>%player% <gray>got the answer of %answer%!"
+  earned: "<dark_gray>The person earned %amount% logs!"
+  meow-jackpot: "<green><bold>%player% GOT THE BILLION LOGS!"
+
+stocks:
+  great-depression: "<dark_red><bold>GREAT DEPRESSION! <reset><gray>Oh my god. <red>-100%"
+  ticker-up: "<green><bold>STOCK TICKER! <reset><green>+%percent%%"
+  ticker-down: "<red><bold>STOCK TICKER! <reset><red>-%percent%%"
+  ticker-event-up: "<green><bold>STOCK TICKER! <reset><gray>%event% <green>+%percent%%"
+  ticker-event-down: "<red><bold>STOCK TICKER! <reset><gray>%event% <red>-%percent%%"
+  boom-events:
+    - "The CEO of Leaf Inc. just fundraised $200M of capital!"
+    - "A player found a hidden gem while cutting a tree!"
+    - "A rich venture capitalist just funded Leaf Inc. with millions of dollars!"
+    - "Leaf Inc. just released revolutionary new tree-cutting technology!"
+    - "Leaf Inc. just reported a +25% earnings increase this quarter!"
+    - "Leaf Inc. just secured a $400M deal with {company}!"
+  fall-events:
+    - "Leaf Inc.'s CEO stepped down amid controversy."
+    - "Leaf Inc. just laid off over 300 employees."
+    - "A Leaf Inc. system malfunction caused {company} to have their infrastructure hacked."
+    - "Leaf Inc. just lost a huge $200M contract with {company}."
+    - "Leaf Inc. reported a 25% reduction in profits this quarter."
+  event-companies:
+    - "Apple"
+    - "Microsoft"
+    - "Amazon"
+  sign-buy-title: "BUY"
+  sign-sell-title: "SELL"
+  sign-stocks-label: "Stocks: %count%"
+  sign-value-label: "Value: %value%"
+
+weather:
+  insufficient-logs: "<gray>You need at least <green>1,000,000 <gray>logs to power the weather machine."
+
+commands:
+  reload-confirm: "<green>Treecutters config.yml and messages.yml reloaded."
+  paste-city-confirm: "<green>City schematic pasted at the configured location."
+  paste-city-not-ready: "<red>No city schematic is loaded (see config.yml citySchematic.file)."
+  usage: "<red>Usage: %usage%"
+  unknown-subcommand: "<red>Unknown or malformed subcommand."
+  player-not-found: "<gray>Player isn't online :("
+  grant-logs-confirm: "<gray>Sent %player% %amount% logs"
+  profile-header: "<green>%player%'s Stats:"
+  profile-stat-line: "<dark_gray>- <gray>%name%: <green>%level%"
+  profile-tree-line: "<dark_gray>   > <aqua>%family% <green>+%value% Logs"
+  analyze-tree-result: "%broken% broken / %total% total"
+
+statshop:
+  sweep:
+    name: "Sweep"
+    description:
+      - "Each tier allows you to break"
+      - "an extra adjacent block upon breaking"
+      - "a block"
+  logFortune:
+    name: "Fortune"
+    description:
+      - "Each tier grants +6%"
+      - "log gain."
+  treeGrowthSpeed:
+    name: "Tree Growth Speed"
+    description:
+      - "Doubles the speed at which"
+      - "your tree regrows."
+  jumpHeight:
+    name: "Jump Height"
+    description:
+      - "Grants an extra tier of jump"
+      - "boost, and buffs your double jump."
+  treeType:
+    name: "Tree Type"
+    description:
+      - "Increases your tree type level,"
+      - "allowing you to unlock new tree types,"
+      - "new upgrades, and general progression."
+  speed:
+    name: "Walk Speed"
+    description:
+      - "Grants +10% walk speed per tier."
+  abilityCooldown:
+    name: "Throwing Axe Cooldown"
+    description:
+      - "Decreases the throwing axe cooldown by 10%"
+      - "per tier."
+  swingRange:
+    name: "Swing Range"
+    description:
+      - "Grants +1 block break reach per tier."
+  turret:
+    name: "Turret"
+    description:
+      - "You automatically fire a lazer,"
+      - "breaking a part of your tree."
+      - "Upgrades increase the frequency"
+      - "the turret fires."
+  cutoffRate:
+    name: "Cut-off Rate"
+    description:
+      - "Each tier makes trees require"
+      - "1% less wood to be considered fully cut"
+      - "down."
+  multishot:
+    name: "Meowltishot"
+    description:
+      - "Each tier makes your throwing axe"
+      - "shoot an extra time."
+      - "The extra axes will be aimed towards"
+      - "a random block on the tree."
+      - "Each tier will also increase"
+      - "the throwing axe cooldown by 0.25 seconds."
+  timber:
+    name: "Timber"
+    description:
+      - "Each tier grants a 0.25% chance"
+      - "to instantly fell your tree upon"
+      - "breaking a block."
+  extendedJumps:
+    name: "Extended Jumps"
+    description:
+      - "Each tier grants an extra mid-air jump"
+      - "before you must touch the ground."
+  throwingAxeSpeed:
+    name: "Throwing Axe Speed"
+    description:
+      - "Each tier makes throwing axes"
+      - "+3 blocks per second faster."
+  combo:
+    name: "Combo Tracker"
+    description:
+      - "Grants +2% Logs per 1,000 Combo per tier."
+
+settings:
+  helpfulTips:
+    name: "Helpful Tips"
+    description:
+      - "Whether to send the 'did you know'"
+      - "message in chat or not."
+  stockTickerAnnouncementsGlobal:
+    name: "Stock Ticker Announcements"
+    description:
+      - "Whether to send stock ticker announcements whenever an event occurs."
+  logSecActionBar:
+    name: "Logs Gain Per Second"
+    description:
+      - "Whether to send your logs per second"
+      - "through the actionbar."
+  logEffects:
+    name: "Log Effects"
+    description:
+      - "Whether to send particle and visual"
+      - "effects when chopping trees."
+      - "Only recommended to disable if"
+      - "the effects are causing lag."
+  jumpType:
+    name: "Double Jump Angle"
+    description:
+      - "Whether to make your double jump angle"
+      - "based on where you're looking, or what"
+      - "movement keys you're pressing."
+
+updatelog:
+  entries:
+    - date: "September 13th"
+      changes:
+        - "+ Released the game!"
+    - date: "September 14th"
+      changes:
+        - "+ Ran a birthday promo for +15% logs!"
+        - "+ Added the city"
+        - "+ Added a tree type level leaderboard"
+        - "+ Added Turret upgrade"
+    - date: "September 15th"
+      changes:
+        - "+ Added stock market"
+        - "+ Added settings menu"
+    - date: "September 16th"
+      changes:
+        - "+ Added weather machine"
+        - "+ Added logs per second counter"
+        - "+ Added optional double jump settings"
+        - "+ Added triple jump and timber upgrades"
+    - date: "September 17th"
+      changes:
+        - "+ Added Level 55+ tree types"
+        - "+ Improved throwing axe mechanics"
+        - "+ Fixed issues involving entities not despawning"
+        - "+ Added update logs"
+        - "+ Added combo system"
+        - "+ Buffs are now additive"

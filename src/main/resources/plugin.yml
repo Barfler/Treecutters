@@ -1,0 +1,22 @@
+name: Treecutters
+version: '1.0.0'
+main: com.barfl.treecutters.Treecutters
+api-version: '1.21'
+author: Barfl
+softdepend: [WorldEdit]
+
+commands:
+  discord:
+    description: Show the Discord invite link
+  ttc:
+    description: Treecutters admin/debug commands
+    usage: /<command> <reload|pastecity|grant_logs|setstatshop|stocktime|chat_game|didyouknow|analyzetree|killall> [args]
+    permission: treecutters.admin
+  profile:
+    description: Show a player's Treecutters profile
+    usage: /<command> <player>
+
+permissions:
+  treecutters.admin:
+    description: Access to Treecutters admin/debug commands
+    default: op
