@@ -20,6 +20,10 @@ public final class LocUtil {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
+    public static double randomWhole(double min, double max) {
+        return Math.round(random(min, max));
+    }
+
     public static Location alignBlockCenter(Location loc) {
         Location out = loc.clone();
         out.setX(Math.floor(loc.getX()) + 0.5);
@@ -83,5 +87,14 @@ public final class LocUtil {
         double x = v.getX() * cos + v.getZ() * sin;
         double z = -v.getX() * sin + v.getZ() * cos;
         return new Vector(x, v.getY(), z);
+    }
+
+    public static Vector rotateAroundZ(Vector v, double degrees) {
+        double rad = Math.toRadians(degrees);
+        double cos = Math.cos(rad);
+        double sin = Math.sin(rad);
+        double x = v.getX() * cos - v.getY() * sin;
+        double y = v.getX() * sin + v.getY() * cos;
+        return new Vector(x, y, v.getZ());
     }
 }

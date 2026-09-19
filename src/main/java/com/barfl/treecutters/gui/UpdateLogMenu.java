@@ -42,7 +42,7 @@ public final class UpdateLogMenu {
             @SuppressWarnings("unchecked")
             List<String> changes = (List<String>) entry.get("changes");
 
-            ItemStack icon = new ItemStack(Material.OAK_BOAT);
+            ItemStack icon = new ItemStack(Material.ACACIA_BOAT);
             ItemMeta meta = icon.getItemMeta();
             meta.displayName(Component.text(date, NamedTextColor.GREEN).decoration(TextDecoration.ITALIC, false));
 

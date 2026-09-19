@@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
@@ -30,7 +31,7 @@ public final class StockMarket {
     }
 
     private String fmt(double value) {
-        return NumberFormat.getIntegerInstance(Locale.US).format(Math.round(value));
+        return com.barfl.treecutters.util.NumFmt.format(value);
     }
 
     public void tick(int forceChance) {
@@ -128,7 +129,7 @@ public final class StockMarket {
         if (data.logs >= state.stockValue) {
             data.stockCount += 1;
             data.logs -= state.stockValue;
-            state.stockValue += LocUtil.random(10000, 15000);
+            state.stockValue += LocUtil.random(5000, 7000);
             updateValue();
         }
     }
@@ -139,7 +140,14 @@ public final class StockMarket {
         if (data.stockCount >= 1) {
             data.stockCount -= 1;
             data.logs += state.stockValue;
-            state.stockValue -= LocUtil.random(10000, 15000);
+            state.stockValue -= LocUtil.random(5000, 7000);
+            updateValue();
+        }
+    }
+
+    public void refreshIfNearby(Player player) {
+        Location buy = configLoc("stockBuySign");
+        if (buy != null && player.getLocation().getWorld() == buy.getWorld() && player.getLocation().distance(buy) <= 12) {
             updateValue();
         }
     }
@@ -149,7 +157,9 @@ public final class StockMarket {
         Location sell = configLoc("stockSellSign");
         Location chart = configLoc("stockChart");
 
-        if (chart != null && blockLocation.getWorld() == chart.getWorld() && blockLocation.distance(chart) <= 1) {
+        if (chart != null && blockLocation.getWorld() == chart.getWorld() && blockLocation.distance(chart) <= 1
+                && player.getCooldown(Material.ACACIA_HANGING_SIGN) == 0) {
+            player.setCooldown(Material.ACACIA_HANGING_SIGN, 20);
             showChart(player, chart);
         }
         if (buy != null && blockLocation.getWorld() == buy.getWorld() && blockLocation.distance(buy) <= 1) {
@@ -163,13 +173,24 @@ public final class StockMarket {
     private void showChart(Player player, Location chartOrigin) {
         GlobalState state = state();
         if (state.historicalStocks.isEmpty()) return;
-        Location pos = chartOrigin.clone();
-        int step = Math.max(1, state.historicalStocks.size() / 25);
-        for (int x = 0; x < state.historicalStocks.size(); x += step) {
-            pos.add(0, 0, 0.05);
-            pos.setY(4 + (state.historicalStocks.get(x) / 500000.0));
-            player.spawnParticle(Particle.HAPPY_VILLAGER, pos, 1);
-        }
+        List<Double> history = state.historicalStocks;
+
+        new org.bukkit.scheduler.BukkitRunnable() {
+            int x = 0;
+            final Location pos = chartOrigin.clone();
+
+            @Override
+            public void run() {
+                if (x >= history.size() || !player.isOnline()) {
+                    cancel();
+                    return;
+                }
+                pos.add(0, 0, 0.05);
+                pos.setY(4 + (history.get(x) / 500000.0));
+                player.spawnParticle(Particle.HAPPY_VILLAGER, pos, 1);
+                x += 25;
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 
     public void updateValue() {

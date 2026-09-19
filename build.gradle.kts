@@ -29,11 +29,6 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 
-    // WorldEdit's Gradle metadata pins guava/gson/fastutil to the exact versions the Minecraft
-    // server itself bundles ("Mojang provides X"), which conflicts with the newer versions
-    // Paper API's own metadata requests. Since this is compileOnly (the real versions come from
-    // the server at runtime either way), excluding them here just lets Paper API's requested
-    // versions win instead of the two conflicting.
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.9") {
         exclude(group = "com.google.guava", module = "guava")
         exclude(group = "com.google.code.gson", module = "gson")

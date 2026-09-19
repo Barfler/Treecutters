@@ -11,7 +11,7 @@ thresholds, and room geometry, as a regular Java plugin using the Paper API.
 
 ## Requirements
 
-* **Java 17+**
+* **Java 21+**
 * **Minecraft 1.21.4+**
 * **Paper** or a compatible Paper fork, such as Purpur
 * **[WorldEdit](https://enginehub.org/worldedit)** - required for pasting room and city schematics
@@ -21,16 +21,16 @@ be pasted and a warning will be logged.
 
 ## Building
 
-Build the plugin with Maven:
+Build the plugin with the bundled Gradle wrapper (no separate Gradle install needed):
 
 ```bash
-mvn clean package
+./gradlew build
 ```
 
-The compiled JAR will be located at:
+On Windows, use `gradlew.bat` instead of `./gradlew`. The compiled JAR will be located at:
 
 ```text
-target/Treecutters-1.0.0.jar
+build/libs/Treecutters-1.0.0.jar
 ```
 
 Drop it into your server's `plugins/` directory and restart the server.

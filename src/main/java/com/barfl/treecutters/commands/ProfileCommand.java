@@ -46,7 +46,7 @@ public final class ProfileCommand implements CommandExecutor {
 
             if (entry.getKey().equals("treeType")) {
                 var family = LogFamilies.forTier(level);
-                String fmt = NumberFormat.getIntegerInstance(Locale.US).format(Math.round(family.value()));
+                String fmt = com.barfl.treecutters.util.NumFmt.format(family.value());
                 sender.sendMessage(msg.get("commands.profile-tree-line", "family", family.name(), "value", fmt));
             }
         }

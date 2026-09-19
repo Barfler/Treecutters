@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.util.List;
@@ -19,11 +20,10 @@ public final class BlockListener implements Listener {
     }
 
     @EventHandler
-    public void onBreak(BlockBreakEvent event) {
-        event.setCancelled(true);
-
+    public void onDamage(BlockDamageEvent event) {
         Player player = event.getPlayer();
         if (!plugin.items().isLogType(event.getBlock().getType())) return;
+        event.setCancelled(true);
 
         PlayerData data = plugin.data().get(player.getUniqueId());
         PlayerSession session = plugin.data().session(player.getUniqueId());
@@ -35,6 +35,11 @@ public final class BlockListener implements Listener {
         session.firstStrike = false;
         plugin.sweeping().safeBreak(player, event.getBlock().getLocation());
         plugin.sweeping().executeSweep(player, blocks);
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        event.setCancelled(true);
     }
 
     @EventHandler

@@ -46,7 +46,7 @@ public final class TtcCommand implements CommandExecutor {
             }
             case "didyouknow" -> plugin.tips().broadcastNow();
             case "pastecity" -> {
-                if (!plugin.schematics().isCityReady()) {
+                if (plugin.schematics() == null || !plugin.schematics().isCityReady()) {
                     sender.sendMessage(msg.get("commands.paste-city-not-ready"));
                     return true;
                 }
@@ -57,7 +57,7 @@ public final class TtcCommand implements CommandExecutor {
                 plugin.reloadConfig();
                 plugin.messages().reload();
                 plugin.items().reloadWoodTypes(plugin.getConfig());
-                plugin.schematics().reload();
+                if (plugin.schematics() != null) plugin.schematics().reload();
                 sender.sendMessage(msg.get("commands.reload-confirm"));
             }
             case "chat_game" -> {

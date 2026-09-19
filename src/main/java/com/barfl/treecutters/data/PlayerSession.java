@@ -34,6 +34,10 @@ public final class PlayerSession {
     public double currentLogsSample = 0;
     public String logsPerSecondText = "";
 
+    public double lastDisplayedLogs = -1;
+    public final org.bukkit.Material[] lastLogSlotMaterials = new org.bukkit.Material[9];
+    public final int[] lastLogSlotCounts = new int[9];
+
     public PlayerSession(UUID uuid) {
         this.uuid = uuid;
     }

@@ -38,14 +38,14 @@ roomGrid:
 
 # Fixed shared-world locations (the "city" hub). Update these to match your build.
 locations:
-  citySpawn: { x: 73.4768, y: 5, z: 54.5637, yaw: 1.86, pitch: -90.99 }
+  citySpawn: { x: 21.5, y: 7, z: 54.5, yaw: -90, pitch: 0 }
   stocksWarp: { x: 97.8883, y: 4, z: 44.4137, yaw: 0.45, pitch: -88.75 }
-  stockBuySign: { x: 103, y: 5, z: 41 }
-  stockSellSign: { x: 103, y: 5, z: 47 }
-  stockValueSign: { x: 101, y: 4, z: 44 }
+  stockBuySign: { x: 50, y: 6, z: 41 }
+  stockSellSign: { x: 50, y: 6, z: 47 }
+  stockValueSign: { x: 49, y: 6, z: 44 }
   stockChart: { x: 107, y: 4, z: 40 }
-  weatherMachineBlock: { x: 101, y: 6, z: 62 }
-  weatherLightning: { x: 101, y: 14, z: 62 }
+  weatherMachineBlock: { x: 49, y: 8, z: 62 }
+  weatherLightning: { x: 49, y: 17, z: 62 }
 
 # Fixed wood types that count as "logs" for mining/whitelisting.
 woodTypes:

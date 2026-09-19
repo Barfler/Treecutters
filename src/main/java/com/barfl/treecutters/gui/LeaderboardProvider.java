@@ -46,8 +46,8 @@ public final class LeaderboardProvider {
         Type type = typeFor(leaderboardType);
 
         List<PlayerData> ranked = new ArrayList<>();
-        for (PlayerData data : plugin.data().allKnown()) {
-            ranked.add(data);
+        for (var player : plugin.getServer().getOnlinePlayers()) {
+            ranked.add(plugin.data().get(player.getUniqueId()));
         }
         ranked.sort(Comparator.comparingDouble(type.metric).reversed());
 
@@ -56,13 +56,12 @@ public final class LeaderboardProvider {
         lines.add(msg.get("leaderboard.type-line", "type", typeLabel));
         lines.add(Component.empty());
 
-        NumberFormat fmt = NumberFormat.getIntegerInstance(Locale.US);
         int idx = 1;
         for (PlayerData data : ranked) {
             if (idx > 20) break;
             OfflinePlayer player = Bukkit.getOfflinePlayer(data.uuid);
             String name = player.getName() != null ? player.getName() : data.uuid.toString().substring(0, 8);
-            String value = fmt.format(Math.round(type.metric.applyAsDouble(data)));
+            String value = com.barfl.treecutters.util.NumFmt.format(type.metric.applyAsDouble(data));
 
             lines.add(msg.get("leaderboard.entry",
                     "rank", String.valueOf(idx),

@@ -22,6 +22,9 @@ public final class MovementListener implements Listener {
         PlayerSession session = plugin.data().session(player.getUniqueId());
         plugin.doubleJump().refreshGroundedCharges(player);
 
+        plugin.stocks().refreshIfNearby(player);
+        session.turretTimer = 5;
+
         Location feet = player.getLocation();
         if (feet.getBlock().getType().isSolid() && feet.clone().add(0, 1, 0).getBlock().getType().isSolid()) {
             player.teleport(feet.clone().add(0, 2, 0));

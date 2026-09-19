@@ -19,7 +19,7 @@ public final class TabListManager {
     }
 
     private String fmt(double v) {
-        return NumberFormat.getIntegerInstance(Locale.US).format(Math.round(v));
+        return com.barfl.treecutters.util.NumFmt.format(v);
     }
 
     public void tick(long nowTicks) {
@@ -33,7 +33,8 @@ public final class TabListManager {
                         plugin.data().session(p.getUniqueId()).stat("tree_type")).reversed())
                 .toList();
 
-        Component header = msg.get("tablist.header-title").appendNewline().appendNewline();
+        Component header = Component.newline()
+                .append(msg.get("tablist.header-title")).appendNewline().appendNewline();
 
         for (Player p : ranked) {
             var session = plugin.data().session(p.getUniqueId());
@@ -50,7 +51,8 @@ public final class TabListManager {
 
         header = header.appendNewline().append(msg.get("tablist.weather-header")).appendNewline();
         int weatherType = plugin.weather().state().weatherType;
-        header = header.append(weatherLine(weatherType));
+        header = header.append(weatherLines(weatherType))
+                .append(msg.get("tablist.weather-logs", "amount", fmt(plugin.weather().state().weatherMachineLogs)));
 
         Component finalHeader = header;
         for (Player p : online) {
@@ -58,14 +60,15 @@ public final class TabListManager {
         }
     }
 
-    private Component weatherLine(int weatherType) {
+    private Component weatherLines(int weatherType) {
         var msg = plugin.messages();
-        return switch (weatherType) {
-            case 1 -> msg.get("tablist.weather-status.rain");
-            case 2 -> msg.get("tablist.weather-status.thunderstorm");
-            case 3 -> msg.get("tablist.weather-status.severe-thunderstorm");
-            case 4 -> msg.get("tablist.weather-status.hurricane");
-            default -> msg.get("tablist.weather-status.inactive");
+        String key = switch (weatherType) {
+            case 1 -> "tablist.weather-status.rain";
+            case 2 -> "tablist.weather-status.thunderstorm";
+            case 3 -> "tablist.weather-status.severe-thunderstorm";
+            case 4 -> "tablist.weather-status.hurricane";
+            default -> "tablist.weather-status.inactive";
         };
+        return msg.getList(key).appendNewline();
     }
 }

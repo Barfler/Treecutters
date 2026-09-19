@@ -40,32 +40,33 @@ public final class DoubleJumpManager {
         double jumpHeight = session.stat("jump_height");
         double upSpeed = (jumpHeight + 1) * 0.2;
 
-        Vector velocity = player.getVelocity();
-        velocity.setY(upSpeed);
+        Vector velocity = new Vector(0, upSpeed, 0);
 
         String jumpType = data.settings.getOrDefault("jumpType", "Look-Based");
-        double forwardSpeed = ((9.0 / 5.0) * jumpHeight + 9.0 / 5.0) * 0.15;
-        Vector direction = jumpType.equals("Look-Based")
-                ? player.getLocation().getDirection().setY(0).normalize()
-                : keyBasedDirection(player, input);
+        double baseForward = ((9.0 / 5.0) * jumpHeight + 9.0 / 5.0) * 0.15;
+        Vector push;
+        if (jumpType.equals("Look-Based")) {
+            push = player.getLocation().getDirection().multiply(baseForward);
+        } else {
+            push = keyBasedDirection(player, input).multiply(baseForward);
+        }
 
-        velocity.setX(velocity.getX() + direction.getX() * forwardSpeed);
-        velocity.setZ(velocity.getZ() + direction.getZ() * forwardSpeed);
-
-        player.setVelocity(velocity);
+        player.setVelocity(velocity.add(push));
     }
 
     private Vector keyBasedDirection(Player player, Input input) {
-        Vector forward = player.getLocation().getDirection().setY(0).normalize();
-        Vector right = LocUtil.rotateAroundY(forward, -90).normalize();
-
         Vector move = new Vector(0, 0, 0);
-        if (input.isForward()) move.add(forward);
-        if (input.isBackward()) move.subtract(forward);
-        if (input.isRight()) move.add(right);
-        if (input.isLeft()) move.subtract(right);
+        if (input.isForward()) move.add(new Vector(0, 0, 1));
+        if (input.isBackward()) move.add(new Vector(0, 0, -1));
+        if (input.isLeft()) move.add(new Vector(1, 0, 0));
+        if (input.isRight()) move.add(new Vector(-1, 0, 0));
 
-        if (move.lengthSquared() == 0) return forward;
-        return move.normalize();
+        if (move.lengthSquared() == 0) {
+            return player.getLocation().getDirection().setY(0).normalize();
+        }
+        move.normalize();
+        move = LocUtil.rotateAroundY(move, -player.getLocation().getYaw());
+        move = LocUtil.rotateAroundZ(move, -player.getLocation().getPitch());
+        return move;
     }
 }

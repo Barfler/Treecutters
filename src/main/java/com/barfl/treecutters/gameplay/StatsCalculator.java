@@ -28,7 +28,7 @@ public final class StatsCalculator {
         }
 
         var speedAttr = player.getAttribute(Attribute.MOVEMENT_SPEED);
-        if (speedAttr != null) speedAttr.setBaseValue(0.2 + (session.stat("walk_speed") * 0.02));
+        if (speedAttr != null) speedAttr.setBaseValue(0.1 + (session.stat("walk_speed") * 0.01));
 
         var reachAttr = player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE);
         if (reachAttr != null) reachAttr.setBaseValue(4 + session.stat("swing_range"));

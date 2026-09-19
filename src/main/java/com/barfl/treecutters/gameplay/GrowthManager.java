@@ -23,7 +23,7 @@ public final class GrowthManager {
         if (session.treeRegenerating) return;
         session.treeRegenerating = true;
 
-        long delay = session.stat("tree_type") < 50 ? 10L : 1L;
+        long delay = session.stat("tree_type") < 50 ? 10L : 0L;
 
         new BukkitRunnable() {
             @Override
@@ -33,20 +33,30 @@ public final class GrowthManager {
                     return;
                 }
                 session.brokenLogs.clear();
-
-                List<TreePlacement> plan = plugin.treeGenerator().growArbitraryTree(
-                        session.roomPos.getWorld(), session.roomPos, (int) Math.round(session.stat("tree_type")));
-
-                int attempts = 0;
-                while (plan.isEmpty() && attempts < 20) {
-                    plan = plugin.treeGenerator().growArbitraryTree(
-                            session.roomPos.getWorld(), session.roomPos, (int) Math.round(session.stat("tree_type")));
-                    attempts++;
-                }
-
-                animatePlacement(player, session, plan);
+                attemptGrow(player, session);
             }
         }.runTaskLater(plugin, delay);
+    }
+
+    private void attemptGrow(Player player, PlayerSession session) {
+        List<TreePlacement> plan = plugin.treeGenerator().growArbitraryTree(
+                session.roomPos.getWorld(), session.roomPos, (int) Math.round(session.stat("tree_type")));
+
+        if (plan.isEmpty()) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (!player.isOnline() || session.roomPos == null) {
+                        session.treeRegenerating = false;
+                        return;
+                    }
+                    attemptGrow(player, session);
+                }
+            }.runTaskLater(plugin, 1L);
+            return;
+        }
+
+        animatePlacement(player, session, plan);
     }
 
     private void animatePlacement(Player player, PlayerSession session, List<TreePlacement> plan) {
@@ -87,7 +97,7 @@ public final class GrowthManager {
 
     private void finishGrowth(Player player, PlayerSession session) {
         if (player.isOnline()) {
-            player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_STEP, 1f, 0.6f);
+            player.playSound(player.getLocation(), Sound.ENTITY_CREAKING_ATTACK, 1f, 1f);
         }
         session.treeRegenerating = false;
         session.firstStrike = true;

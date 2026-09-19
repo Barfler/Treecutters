@@ -19,8 +19,8 @@ public final class ChatTags {
     private static final List<String> GRADIENT_MAGENTA3 = List.of("#770077", "#bb00bb");
     private static final List<String> GRADIENT_PERIWINKLE2 = List.of("#5555c4", "#c5d2e9");
 
-    private static final List<String> PRIDE_PAN = List.of("#FF218C", "#FFD800", "#21B1FF");
-    private static final List<String> PRIDE_TRANS = List.of("#5BCEFA", "#F5A9B8", "#FFFFFF", "#F5A9B8", "#5BCEFA");
+    private static final List<String> PRIDE_PAN = List.of("#FF218C", "#FFD800");
+    private static final List<String> PRIDE_TRANS = List.of("#5BCEFA", "#F5A9B8");
 
     private static final List<String> FLAT_COLORS = List.of(
             "gray", "blue", "green", "yellow", "gold", "red", "dark_red", "dark_purple", "light_purple", "aqua"

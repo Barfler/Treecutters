@@ -27,8 +27,22 @@ public final class JoinQuitListener implements Listener {
 
         plugin.settingsMenu().ensureDefaults(data);
 
+        for (var online : plugin.getServer().getOnlinePlayers()) {
+            plugin.statsCalculator().computeStats(online, plugin.data().get(online.getUniqueId()),
+                    plugin.data().session(online.getUniqueId()));
+        }
+
         player.setGameMode(GameMode.SURVIVAL);
-        player.getInventory().addItem(plugin.items().buildAxeTool(plugin.messages().get("items.axe-name")));
+        boolean hasAxe = false;
+        for (var item : player.getInventory().getContents()) {
+            if (plugin.items().isAxeTool(item)) {
+                hasAxe = true;
+                break;
+            }
+        }
+        if (!hasAxe) {
+            player.getInventory().addItem(plugin.items().buildAxeTool(plugin.messages().get("items.axe-name")));
+        }
 
         Location roomPos = plugin.rooms().assign();
         if (roomPos == null) {
@@ -42,7 +56,7 @@ public final class JoinQuitListener implements Listener {
         spawn.setWorld(roomPos.getWorld());
         player.teleport(spawn);
 
-        plugin.schematics().pasteAt(roomPos);
+        if (plugin.schematics() != null) plugin.schematics().pasteAt(roomPos);
         plugin.growth().regrow(player);
 
         plugin.statsCalculator().computeStats(player, data, session);
@@ -52,7 +66,7 @@ public final class JoinQuitListener implements Listener {
             public void run() {
                 if (!player.isOnline()) return;
                 player.sendMessage(plugin.messages().getList("join.welcome"));
-                player.playSound(player.getLocation(), Sound.ENTITY_CREAKING_ATTACK, 1f, 1f);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
             }
         }.runTaskLater(plugin, 60L);
     }

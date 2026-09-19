@@ -6,13 +6,22 @@ import com.barfl.treecutters.config.LogFamily;
 import com.barfl.treecutters.data.PlayerData;
 import com.barfl.treecutters.data.PlayerSession;
 import com.barfl.treecutters.util.LocUtil;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Transformation;
+import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -108,9 +117,10 @@ public final class SweepManager {
         }
         if (blocks.isEmpty()) return;
 
-        int perTick = Math.max(1, blocks.size() / 10);
+        double oftency = blocks.size() / 10.0;
         new BukkitRunnable() {
-            int i = 0;
+            int index = 0;
+            double acc = 0;
 
             @Override
             public void run() {
@@ -118,10 +128,16 @@ public final class SweepManager {
                     cancel();
                     return;
                 }
-                for (int c = 0; c < perTick && i < blocks.size(); c++, i++) {
-                    safeBreak(player, blocks.get(i));
+                while (index < blocks.size()) {
+                    safeBreak(player, blocks.get(index));
+                    index++;
+                    acc += 1;
+                    if (acc > oftency) {
+                        acc = 0;
+                        return;
+                    }
                 }
-                if (i >= blocks.size()) cancel();
+                cancel();
             }
         }.runTaskTimer(plugin, 0L, 1L);
     }
@@ -155,8 +171,7 @@ public final class SweepManager {
 
         String logEffects = data.settings.getOrDefault("logEffects", "Enabled");
         if (logEffects.equals("Enabled") || logEffects.equals("Particles Only")) {
-            block.getWorld().playSound(block, Sound.BLOCK_WOOD_BREAK, 1f, 1f);
-            block.getBlock().setType(Material.AIR);
+            visualBreak(block, mat);
         } else {
             block.getBlock().setType(Material.AIR);
         }
@@ -176,16 +191,74 @@ public final class SweepManager {
                     data.logs += logValue;
                     data.trueLogs += 1;
                     session.combo += 1;
+                    spawnBlockFallAnim(player, block2, mat2);
                 }
-                block2.getBlock().setType(Material.AIR);
+                if (logEffects.equals("Enabled") || logEffects.equals("Particles Only")) {
+                    visualBreak(block2, mat2);
+                } else {
+                    block2.getBlock().setType(Material.AIR);
+                }
             }
-            player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_SONIC_CHARGE, 1f, 0.5f);
+            player.playSound(player.getLocation(), Sound.ENTITY_CREAKING_ACTIVATE, 1f, 0.5f);
             plugin.growth().regrow(player);
         }
     }
 
+    private void visualBreak(Location block, Material mat) {
+        if (mat == null || mat == Material.AIR) {
+            block.getBlock().setType(Material.AIR);
+            return;
+        }
+        block.getWorld().playSound(block, Sound.BLOCK_WOOD_BREAK, 1f, 1f);
+        block.getWorld().spawnParticle(Particle.BLOCK, block, 20, 0.5, 0.5, 0.5, 0, mat.createBlockData());
+        block.getBlock().setType(Material.AIR);
+    }
+
     private void spawnTreeClearAnim(Player player, Location pos) {
-        player.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, pos, 40, 1, 1, 1, 0.05);
+        Location aligned = LocUtil.alignBlockCenter(pos);
+        boolean lookingDown = player.getEyeLocation().getY() > aligned.getY();
+        float pitchDegrees = lookingDown ? 90f : -90f;
+
+        TextDisplay display = aligned.getWorld().spawn(aligned, TextDisplay.class, d -> {
+            d.text(Component.text("☐"));
+            d.setBillboard(Display.Billboard.FIXED);
+            d.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
+            d.setPersistent(false);
+        });
+        for (Player other : plugin.getServer().getOnlinePlayers()) {
+            if (!other.equals(player)) other.hideEntity(plugin, display);
+        }
+
+        new BukkitRunnable() {
+            int idx = 0;
+
+            @Override
+            public void run() {
+                if (!display.isValid()) {
+                    cancel();
+                    return;
+                }
+                if (idx > 90) {
+                    display.remove();
+                    cancel();
+                    return;
+                }
+
+                display.setInterpolationDuration(1);
+                display.setInterpolationDelay(0);
+                display.setTextOpacity((byte) ((100 - idx) / 2));
+
+                float scale = idx * 2;
+                display.setTransformation(new Transformation(
+                        new Vector3f(-0.02f, 0f, -0.13f).mul(scale),
+                        new Quaternionf(new AxisAngle4f((float) Math.toRadians(pitchDegrees), 1, 0, 0)),
+                        new Vector3f(scale),
+                        new Quaternionf()
+                ));
+
+                idx += 10;
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 
     private void spawnBlockFallAnim(Player player, Location block, Material mat) {
@@ -200,28 +273,56 @@ public final class SweepManager {
         });
 
         Location ground = block.clone();
-        while (ground.getBlock().getType() != Material.WATER && ground.getBlock().getType() != Material.GRASS_BLOCK
-                && ground.getY() > block.getWorld().getMinHeight()) {
+        int searched = 0;
+        while (searched < 40 && ground.getY() > block.getWorld().getMinHeight()) {
+            Material groundMat = ground.getBlock().getType();
+            if (groundMat == Material.WATER || groundMat == Material.GRASS_BLOCK) break;
             ground.add(0, -1, 0);
+            searched++;
         }
         double distDown = Math.abs(block.getY() - ground.getY());
         int distTime = (int) Math.max(1, Math.ceil(distDown * 3));
 
+        double xOff = LocUtil.random(-2, 2);
+        double zOff = LocUtil.random(-2, 2);
+        double pitchOff = LocUtil.random(-90, 90);
+        double yawOff = LocUtil.random(-90, 90);
+        double rollOff = LocUtil.random(-90, 90);
+
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!display.isValid()) return;
-                display.setInterpolationDuration(distTime);
+                if (!display.isValid()) {
+                    return;
+                }
+                int clampedDuration = Math.min(59, distTime);
+                display.setTeleportDuration(clampedDuration);
+                display.setInterpolationDuration(clampedDuration);
                 display.setInterpolationDelay(0);
-                Location target = block.clone().add(
-                        LocUtil.random(-2, 2), -distDown, LocUtil.random(-2, 2));
-                display.teleport(target);
+
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        if (display.isValid()) display.remove();
+                        if (!display.isValid()) return;
+                        Location target = block.clone().add(xOff, -distDown, zOff);
+                        display.teleport(target);
+                        display.setTransformation(new Transformation(
+                                new Vector3f(0, 0, 0),
+                                new Quaternionf().rotateY((float) Math.toRadians(yawOff))
+                                        .rotateX((float) Math.toRadians(pitchOff))
+                                        .rotateZ((float) Math.toRadians(rollOff)),
+                                new Vector3f(1, 1, 1),
+                                new Quaternionf()
+                        ));
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (display.isValid()) display.remove();
+                            }
+                        }.runTaskLater(plugin, distTime);
                     }
-                }.runTaskLater(plugin, distTime + 1L);
+                }.runTaskLater(plugin, 1L);
             }
         }.runTaskLater(plugin, 1L);
     }

@@ -75,8 +75,9 @@ public final class Treecutters extends JavaPlugin {
         saveDefaultConfig();
         messages = new Messages(this);
 
-        if (getServer().getPluginManager().getPlugin("WorldEdit") == null) {
-            getLogger().warning("WorldEdit is not installed - the room schematic paste feature will not work "
+        boolean worldEditPresent = getServer().getPluginManager().getPlugin("WorldEdit") != null;
+        if (!worldEditPresent) {
+            getLogger().warning("WorldEdit is not installed - the room/city schematic paste feature will not work "
                     + "until it is. See https://enginehub.org/worldedit for downloads.");
         }
 
@@ -89,7 +90,7 @@ public final class Treecutters extends JavaPlugin {
         playerDataManager = new PlayerDataManager(this);
         globalStateManager = new GlobalStateManager(this);
         roomManager = world != null ? new RoomManager(world, getConfig()) : null;
-        schematicPaster = new SchematicPaster(this);
+        schematicPaster = worldEditPresent ? new SchematicPaster(this) : null;
         items = new Items(this);
         treeGenerator = new TreeGenerator();
         sweepManager = new SweepManager(this);

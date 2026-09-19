@@ -1,6 +1,7 @@
 package com.barfl.treecutters.config;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -52,12 +53,16 @@ public final class Messages {
         return value;
     }
 
+    private Component deserialize(String raw) {
+        return miniMessage.deserialize(raw).decoration(TextDecoration.ITALIC, false);
+    }
+
     public Component get(String path) {
-        return miniMessage.deserialize(raw(path, null));
+        return deserialize(raw(path, null));
     }
 
     public Component get(String path, Map<String, String> placeholders) {
-        return miniMessage.deserialize(raw(path, placeholders));
+        return deserialize(raw(path, placeholders));
     }
 
     public Component get(String path, String... keyValuePairs) {
@@ -78,7 +83,7 @@ public final class Messages {
                     line = line.replace("%" + e.getKey() + "%", e.getValue());
                 }
             }
-            result = result.append(miniMessage.deserialize(line));
+            result = result.append(deserialize(line));
             if (i < lines.size() - 1) result = result.appendNewline();
         }
         return result;
@@ -96,7 +101,7 @@ public final class Messages {
                     line = line.replace("%" + e.getKey() + "%", e.getValue());
                 }
             }
-            out.add(miniMessage.deserialize(line));
+            out.add(deserialize(line));
         }
         return out;
     }

@@ -21,7 +21,9 @@ public final class TreeGenerator {
     public TreeSize sizeFor(int idx) {
         TreeSize[] sizes = {TreeSize.TINY, TreeSize.SMALL, TreeSize.MEDIUM, TreeSize.BIG, TreeSize.MEGA};
         TreeSize size = sizes[Math.floorMod(idx, 5)];
-        return idx >= 55 ? TreeSize.MEGA : size;
+        if (idx >= 55) return TreeSize.MEGA;
+        if (idx == 25) return TreeSize.SMALL;
+        return size;
     }
 
     private TreeType defaultTypeFor(int idx) {
@@ -146,7 +148,7 @@ public final class TreeGenerator {
 
     private List<Location> buildBranches(World world, Set<Location> reserved, List<TreePlacement> out, Location root,
                                           double length, int branches, double targetYOff, double centerDistance, Material mat) {
-        double yawOffset = LocUtil.random(0, 360);
+        double yawOffset = LocUtil.randomInt(0, 360);
         double yawDiff = 360.0 / branches;
         List<Location> endcaps = new ArrayList<>();
 
@@ -191,7 +193,7 @@ public final class TreeGenerator {
 
         buildTrunk(world, reserved, out, trunkRoot, v.height(), v.logPositions(), Material.STRIPPED_OAK_WOOD);
         trunkRoot.add(0, v.height(), 0);
-        buildBranches(world, reserved, out, trunkRoot, v.height() / 2.0, v.branchReqs(), LocUtil.random(-2, 2), 0,
+        buildBranches(world, reserved, out, trunkRoot, v.height() / 2.0, v.branchReqs(), LocUtil.randomInt(-2, 2), 0,
                 Material.STRIPPED_OAK_WOOD);
 
         return out;
@@ -209,7 +211,7 @@ public final class TreeGenerator {
 
         buildTrunk(world, reserved, out, r, v.height(), v.logPositions(), Material.STRIPPED_SPRUCE_WOOD);
         r.add(0, v.height(), 0);
-        buildBranches(world, reserved, out, r, v.height() * 0.75, v.branchReqs(), LocUtil.random(-3, 3), 0,
+        buildBranches(world, reserved, out, r, v.height() * 0.75, v.branchReqs(), LocUtil.randomInt(-3, 3), 0,
                 Material.STRIPPED_SPRUCE_WOOD);
 
         return out;
@@ -220,16 +222,16 @@ public final class TreeGenerator {
         Set<Location> reserved = new HashSet<>();
         List<TreePlacement> out = new ArrayList<>();
         Location r = root.clone();
-        double dx = LocUtil.random(-1, 1);
-        double dz = LocUtil.random(-1, 1);
+        double dx = LocUtil.randomInt(-1, 1);
+        double dz = LocUtil.randomInt(-1, 1);
 
         for (int part = 1; part <= 4; part++) {
-            buildTrunk(world, reserved, out, r, (int) Math.round(v.height() / 4.0), v.logPositions(), Material.STRIPPED_CHERRY_WOOD);
+            buildTrunk(world, reserved, out, r, (int) (v.height() / 4.0), v.logPositions(), Material.STRIPPED_CHERRY_WOOD);
             r.add(dx, v.height() / 4.0, dz);
             r = LocUtil.alignBlockCenter(r);
         }
 
-        buildBranches(world, reserved, out, r, v.height() * 0.8, v.branchReqs(), LocUtil.random(-3, 3), 0,
+        buildBranches(world, reserved, out, r, v.height() * 0.8, v.branchReqs(), LocUtil.randomInt(-3, 3), 0,
                 Material.STRIPPED_CHERRY_WOOD);
 
         return out;
@@ -241,17 +243,17 @@ public final class TreeGenerator {
         List<TreePlacement> out = new ArrayList<>();
         Location r = root.clone();
 
-        buildTrunk(world, reserved, out, r, (int) Math.round(v.height() / 2.0), v.logPositions(), Material.STRIPPED_WARPED_STEM);
+        buildTrunk(world, reserved, out, r, (int) (v.height() / 2.0), v.logPositions(), Material.STRIPPED_WARPED_STEM);
         r.add(0, v.height() / 2.0, 0);
 
         List<Location> endcaps = buildBranches(world, reserved, out, r, v.height() * 0.6, v.branchReqs(),
-                LocUtil.random(2, 4), 0, Material.STRIPPED_WARPED_STEM);
+                LocUtil.randomInt(2, 4), 0, Material.STRIPPED_WARPED_STEM);
 
         for (Location endcap : endcaps) {
             Location e = endcap.clone();
-            buildTrunk(world, reserved, out, e, (int) Math.round(v.height() / 2.0), v.logPositions(), Material.STRIPPED_WARPED_STEM);
+            buildTrunk(world, reserved, out, e, (int) (v.height() / 2.0), v.logPositions(), Material.STRIPPED_WARPED_STEM);
             e.add(0, v.height() / 2.0, 0);
-            buildBranches(world, reserved, out, e, v.height() * 0.1, v.branchReqs(), LocUtil.random(2, 4), 0,
+            buildBranches(world, reserved, out, e, v.height() * 0.1, v.branchReqs(), LocUtil.randomInt(2, 4), 0,
                     Material.STRIPPED_WARPED_STEM);
         }
 
@@ -267,9 +269,9 @@ public final class TreeGenerator {
         buildTrunk(world, reserved, out, r, v.height(), v.logPositions(), Material.STRIPPED_CRIMSON_STEM);
 
         Location root2 = root.clone();
-        for (int x = 0; x < v.height(); x += 3) {
+        for (int x = 0; x <= v.height(); x += 3) {
             root2.add(0, 3, 0);
-            buildBranches(world, reserved, out, root2, v.height() * 0.7, v.branchReqs(), LocUtil.random(-3, -1), 0,
+            buildBranches(world, reserved, out, root2, v.height() * 0.7, v.branchReqs(), LocUtil.randomInt(-3, -1), 0,
                     Material.STRIPPED_CRIMSON_STEM);
         }
 
@@ -286,11 +288,11 @@ public final class TreeGenerator {
         r.add(0, v.height(), 0);
 
         List<Location> endcaps = buildBranches(world, reserved, out, r, v.height() * 0.7, v.branchReqs(),
-                LocUtil.random(-3, -1), 0, Material.STRIPPED_PALE_OAK_WOOD);
+                LocUtil.randomInt(-3, -1), 0, Material.STRIPPED_PALE_OAK_WOOD);
 
         for (Location endcap : endcaps) {
-            buildBranches(world, reserved, out, endcap, LocUtil.random(2, 3), 1,
-                    -LocUtil.random(v.height() * 0.6, v.height() * 0.8), 0, Material.STRIPPED_PALE_OAK_WOOD);
+            buildBranches(world, reserved, out, endcap, LocUtil.randomInt(2, 3), 1,
+                    -LocUtil.randomWhole(v.height() * 0.6, v.height() * 0.8), 0, Material.STRIPPED_PALE_OAK_WOOD);
         }
 
         return out;
@@ -306,10 +308,10 @@ public final class TreeGenerator {
         r.add(0, v.height(), 0);
 
         List<Location> endcaps = buildBranches(world, reserved, out, r, v.height() * 0.6, v.branchReqs(),
-                LocUtil.random(2, 4), 0, Material.PALE_OAK_WOOD);
+                LocUtil.randomInt(2, 4), 0, Material.PALE_OAK_WOOD);
 
         for (Location endcap : endcaps) {
-            buildBranches(world, reserved, out, endcap, v.height() * 0.5, v.branchReqs(), LocUtil.random(2, 4), 0,
+            buildBranches(world, reserved, out, endcap, v.height() * 0.5, v.branchReqs(), LocUtil.randomInt(2, 4), 0,
                     Material.PALE_OAK_WOOD);
         }
 
@@ -321,7 +323,7 @@ public final class TreeGenerator {
         Set<Location> reserved = new HashSet<>();
         List<TreePlacement> out = new ArrayList<>();
 
-        double dt = LocUtil.random(0, 3.14);
+        double dt = LocUtil.randomWhole(0, 3.14);
         Location lastRoot = root.clone();
         for (double t = 0; t <= v.height(); t += 0.4) {
             double dx = Math.cos(t + dt) * 4;
@@ -330,7 +332,7 @@ public final class TreeGenerator {
             buildTrunk(world, reserved, out, lastRoot, 1, v.logPositions(), Material.STRIPPED_BIRCH_WOOD);
         }
 
-        buildBranches(world, reserved, out, lastRoot, v.height() * 0.6, v.branchReqs(), LocUtil.random(2, 4), 0,
+        buildBranches(world, reserved, out, lastRoot, v.height() * 0.6, v.branchReqs(), LocUtil.randomInt(2, 4), 0,
                 Material.STRIPPED_BIRCH_WOOD);
 
         return out;
@@ -341,7 +343,7 @@ public final class TreeGenerator {
         Set<Location> reserved = new HashSet<>();
         List<TreePlacement> out = new ArrayList<>();
 
-        double dt = LocUtil.random(0, 3.14);
+        double dt = LocUtil.randomWhole(0, 3.14);
         Location lastRoot = root.clone();
         double limit = v.height() * 1.2;
         for (double t = 0; t <= limit; t += 0.4) {
@@ -351,11 +353,11 @@ public final class TreeGenerator {
             buildTrunk(world, reserved, out, lastRoot, 1, v.logPositions(), Material.STRIPPED_DARK_OAK_WOOD);
             if (t % 4 == 1.2) {
                 buildBranches(world, reserved, out, lastRoot, Math.min(v.height() * 0.7, 6), v.branchReqs(),
-                        LocUtil.random(1, 2), 0, Material.STRIPPED_DARK_OAK_WOOD);
+                        LocUtil.randomInt(1, 2), 0, Material.STRIPPED_DARK_OAK_WOOD);
             }
         }
 
-        buildBranches(world, reserved, out, lastRoot, v.height() * 0.7, v.branchReqs(), LocUtil.random(2, 4), 0,
+        buildBranches(world, reserved, out, lastRoot, v.height() * 0.7, v.branchReqs(), LocUtil.randomInt(2, 4), 0,
                 Material.STRIPPED_DARK_OAK_WOOD);
 
         return out;
@@ -366,7 +368,7 @@ public final class TreeGenerator {
         Set<Location> reserved = new HashSet<>();
         List<TreePlacement> out = new ArrayList<>();
 
-        double dt = LocUtil.random(0, 3.14);
+        double dt = LocUtil.randomWhole(0, 3.14);
         Location lastRoot = root.clone();
         double limit = v.height() * 1.2;
         for (double t = 0; t <= limit; t += 0.4) {
@@ -380,11 +382,11 @@ public final class TreeGenerator {
 
             if (t % 4 == 1.2) {
                 buildBranches(world, reserved, out, lastRoot, Math.min(v.height() * 0.7, 6), v.branchReqs(),
-                        LocUtil.random(1, 2), 0, Material.OAK_WOOD);
+                        LocUtil.randomInt(1, 2), 0, Material.OAK_WOOD);
             }
         }
 
-        buildBranches(world, reserved, out, lastRoot, v.height() * 0.7, v.branchReqs(), LocUtil.random(2, 4), 0,
+        buildBranches(world, reserved, out, lastRoot, v.height() * 0.7, v.branchReqs(), LocUtil.randomInt(2, 4), 0,
                 Material.OAK_WOOD);
 
         return out;
@@ -400,7 +402,7 @@ public final class TreeGenerator {
         r.add(0, v.height(), 0);
 
         List<Location> endcaps = buildBranches(world, reserved, out, r, v.height() * 0.8, v.branchReqs(),
-                LocUtil.random(-3, -1), 0, Material.STRIPPED_CRIMSON_STEM);
+                LocUtil.randomInt(-3, -1), 0, Material.STRIPPED_CRIMSON_STEM);
 
         for (Location endcap : endcaps) {
             buildMeteor(world, reserved, out, endcap, 4, Material.STRIPPED_CRIMSON_STEM);
@@ -419,7 +421,7 @@ public final class TreeGenerator {
             if (idx + 2 >= v.height()) break;
             r.add(0, 3, 0);
             buildTrunk(world, reserved, out, r, v.height(), v.logPositions(), Material.STRIPPED_ACACIA_WOOD);
-            List<Location> endcaps = buildBranches(world, reserved, out, r, v.height() * 0.8, 1, LocUtil.random(-1, 1), 0,
+            List<Location> endcaps = buildBranches(world, reserved, out, r, v.height() * 0.8, 1, LocUtil.randomInt(-1, 1), 0,
                     Material.STRIPPED_ACACIA_WOOD);
             for (Location endcap : endcaps) {
                 buildMeteor(world, reserved, out, endcap, 4, Material.STRIPPED_ACACIA_WOOD);

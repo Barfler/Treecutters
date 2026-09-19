@@ -67,11 +67,31 @@ tablist:
   players-online: "<gray>Players Online: <aqua>%count%"
   weather-header: "<aqua><bold>WEATHER MACHINE"
   weather-status:
-    inactive: "<gray>Status: <red>Inactive"
-    rain: "<gray>Status: <aqua>Rain"
-    thunderstorm: "<gray>Status: <blue>Thunderstorm"
-    severe-thunderstorm: "<gray>Status: <dark_red>Severe Thunderstorm"
-    hurricane: "<gray>Status: <dark_blue>Hurricane"
+    inactive:
+      - "<gray>Status: <red>Inactive"
+    rain:
+      - "<gray>Status: <aqua>Rain"
+      - "<gray>Global Boost: <green>+20%"
+      - "<gray>Cost: <red>-5k/s/p"
+    thunderstorm:
+      - "<gray>Status: <blue>Thunderstorm"
+      - "<gray>Global Boost: <green>+50%"
+      - "<gray>Cost: <red>-20k/s/p"
+    severe-thunderstorm:
+      - "<gray>Status: <dark_red>Severe Thunderstorm"
+      - "<gray>Global Boost: <green>+90%"
+      - "<gray>Cost: <red>-50k/s/p"
+    hurricane:
+      - "<gray>Status: <dark_blue>Hurricane"
+      - "<gray>Global Boost: <green>+150%"
+      - "<gray>Cost: <red>-150k/s/p"
+  weather-logs: "<gray>Logs: <green>%amount%<newline><newline><newline><newline><newline><newline><newline><newline><newline>
+  <newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline>
+  <newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline>
+  <newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline>
+  <newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline>
+  <newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline><newline>
+  <newline><newline>"
 
 actionbar:
   logs: "<dark_green>╠ <green>%logs% Logs"
@@ -105,22 +125,34 @@ chatgames:
     header: "SYLLOGISM!"
     prompt: "What is `%question%`?"
     entries:
-      "DF": "DiamondFire"
-      "HTML": "Hypertext Markup Language"
-      "6!": "720"
-      "LASER": "Light Amplification by Stimulated Emission of Radiation"
-      "CEO": "Chief Executive Officer"
-      "All humans are mortal. Socrates is human, therefore...": "Socrates is mortal"
-      "If it rains, the grass gets wet. It is raining, therefore...": "the grass is wet"
+      - question: "DF"
+        answer: "DiamondFire"
+      - question: "HTML"
+        answer: "Hypertext Markup Language"
+      - question: "6!"
+        answer: "720"
+      - question: "LASER"
+        answer: "Light Amplification by Stimulated Emission of Radiation"
+      - question: "CEO"
+        answer: "Chief Executive Officer"
+      - question: "All humans are mortal. Socrates is human, therefore..."
+        answer: "Socrates is mortal"
+      - question: "If it rains, the grass gets wet. It is raining, therefore..."
+        answer: "the grass is wet"
   riddle:
     header: "RIDDLE!"
     prompt: "%question%"
     entries:
-      "What has a face, but can't smile?": "Clock"
-      "What has many keys, but can't open a single lock?": "Piano"
-      "What lives if you feed it, but dies if you give it a drink?": "Fire"
-      "What has a head and a tail, but no body?": "Coin"
-      "What can you catch, but not throw?": "A cold"
+      - question: "What has a face, but can't smile?"
+        answer: "Clock"
+      - question: "What has many keys, but can't open a single lock?"
+        answer: "Piano"
+      - question: "What lives if you feed it, but dies if you give it a drink?"
+        answer: "Fire"
+      - question: "What has a head and a tail, but no body?"
+        answer: "Coin"
+      - question: "What can you catch, but not throw?"
+        answer: "A cold"
   scramble:
     header: "QUICK SCRAMBLE!"
     prompt: "Unscramble the word '%scrambled%'!"
@@ -232,116 +264,116 @@ commands:
 
 statshop:
   sweep:
-    name: "Sweep"
+    name: "<green>Sweep"
     description:
-      - "Each tier allows you to break"
-      - "an extra adjacent block upon breaking"
-      - "a block"
+      - "<gray>Each tier allows you to break"
+      - "<gray>an extra adjacent block upon breaking"
+      - "<gray>a block"
   logFortune:
-    name: "Fortune"
+    name: "<green>Fortune"
     description:
-      - "Each tier grants +6%"
-      - "log gain."
+      - "<gray>Each tier grants +6%"
+      - "<gray>log gain."
   treeGrowthSpeed:
-    name: "Tree Growth Speed"
+    name: "<green>Tree Growth Speed"
     description:
-      - "Doubles the speed at which"
-      - "your tree regrows."
+      - "<gray>Doubles the speed at which"
+      - "<gray>your tree regrows."
   jumpHeight:
-    name: "Jump Height"
+    name: "<green>Jump Height"
     description:
-      - "Grants an extra tier of jump"
-      - "boost, and buffs your double jump."
+      - "<gray>Grants an extra tier of jump"
+      - "<gray>boost, and buffs your double jump."
   treeType:
-    name: "Tree Type"
+    name: "<green>Tree Type"
     description:
-      - "Increases your tree type level,"
-      - "allowing you to unlock new tree types,"
-      - "new upgrades, and general progression."
+      - "<gray>Increases your tree type level,"
+      - "<gray>allowing you to unlock new tree types,"
+      - "<gray>new upgrades, and general progression."
   speed:
-    name: "Walk Speed"
+    name: "<green>Walk Speed"
     description:
-      - "Grants +10% walk speed per tier."
+      - "<gray>Grants +10% walk speed per tier."
   abilityCooldown:
-    name: "Throwing Axe Cooldown"
+    name: "<green>Throwing Axe Cooldown"
     description:
-      - "Decreases the throwing axe cooldown by 10%"
-      - "per tier."
+      - "<gray>Decreases the throwing axe cooldown by 10%"
+      - "<gray>per tier."
   swingRange:
-    name: "Swing Range"
+    name: "<green>Swing Range"
     description:
-      - "Grants +1 block break reach per tier."
+      - "<gray>Grants +1 block break reach per tier."
   turret:
-    name: "Turret"
+    name: "<green>Turret"
     description:
-      - "You automatically fire a lazer,"
-      - "breaking a part of your tree."
-      - "Upgrades increase the frequency"
-      - "the turret fires."
+      - "<gray>You automatically fire a lazer,"
+      - "<gray>breaking a part of your tree."
+      - "<gray>Upgrades increase the frequency"
+      - "<gray>the turret fires."
   cutoffRate:
-    name: "Cut-off Rate"
+    name: "<green>Cut-off Rate"
     description:
-      - "Each tier makes trees require"
-      - "1% less wood to be considered fully cut"
-      - "down."
+      - "<gray>Each tier makes trees require"
+      - "<gray>1% less wood to be considered fully cut"
+      - "<gray>down."
   multishot:
-    name: "Meowltishot"
+    name: "<green>Meowltishot"
     description:
-      - "Each tier makes your throwing axe"
-      - "shoot an extra time."
-      - "The extra axes will be aimed towards"
-      - "a random block on the tree."
-      - "Each tier will also increase"
-      - "the throwing axe cooldown by 0.25 seconds."
+      - "<gray>Each tier makes your throwing axe"
+      - "<gray>shoot an extra time."
+      - "<gray>The extra axes will be aimed towards"
+      - "<gray>a random block on the tree."
+      - "<gray>Each tier will also increase"
+      - "<gray>the throwing axe cooldown by 0.25 seconds."
   timber:
-    name: "Timber"
+    name: "<green>Timber"
     description:
-      - "Each tier grants a 0.25% chance"
-      - "to instantly fell your tree upon"
-      - "breaking a block."
+      - "<gray>Each tier grants a 0.25% chance"
+      - "<gray>to instantly fell your tree upon"
+      - "<gray>breaking a block."
   extendedJumps:
-    name: "Extended Jumps"
+    name: "<green>Extended Jumps"
     description:
-      - "Each tier grants an extra mid-air jump"
-      - "before you must touch the ground."
+      - "<gray>Each tier grants an extra mid-air jump"
+      - "<gray>before you must touch the ground."
   throwingAxeSpeed:
-    name: "Throwing Axe Speed"
+    name: "<green>Throwing Axe Speed"
     description:
-      - "Each tier makes throwing axes"
-      - "+3 blocks per second faster."
+      - "<gray>Each tier makes throwing axes"
+      - "<gray>+3 blocks per second faster."
   combo:
-    name: "Combo Tracker"
+    name: "<green>Combo Tracker"
     description:
-      - "Grants +2% Logs per 1,000 Combo per tier."
+      - "<gray>Grants +2% Logs per 1,000 Combo per tier."
 
 settings:
   helpfulTips:
-    name: "Helpful Tips"
+    name: "<green>Helpful Tips"
     description:
-      - "Whether to send the 'did you know'"
-      - "message in chat or not."
+      - "<gray>Whether to send the 'did you know'"
+      - "<gray>message in chat or not."
   stockTickerAnnouncementsGlobal:
-    name: "Stock Ticker Announcements"
+    name: "<green>Stock Ticker Announcements"
     description:
-      - "Whether to send stock ticker announcements whenever an event occurs."
+      - "<gray>Whether to send stock ticker announcements whenever an event occurs."
   logSecActionBar:
-    name: "Logs Gain Per Second"
+    name: "<green>Logs Gain Per Second"
     description:
-      - "Whether to send your logs per second"
-      - "through the actionbar."
+      - "<gray>Whether to send your logs per second"
+      - "<gray>through the actionbar."
   logEffects:
-    name: "Log Effects"
+    name: "<green>Log Effects"
     description:
-      - "Whether to send particle and visual"
-      - "effects when chopping trees."
-      - "Only recommended to disable if"
-      - "the effects are causing lag."
+      - "<gray>Whether to send particle and visual"
+      - "<gray>effects when chopping trees."
+      - "<gray>Only recommended to disable if"
+      - "<gray>the effects are causing lag."
   jumpType:
-    name: "Double Jump Angle"
+    name: "<green>Double Jump Angle"
     description:
-      - "Whether to make your double jump angle"
-      - "based on where you're looking, or what"
-      - "movement keys you're pressing."
+      - "<gray>Whether to make your double jump angle"
+      - "<gray>based on where you're looking, or what"
+      - "<gray>movement keys you're pressing."
 
 updatelog:
   entries:

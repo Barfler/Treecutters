@@ -29,7 +29,6 @@ public final class ChatGameManager {
     public void start(int gameTypeIn) {
         var msg = plugin.messages();
         GlobalState state = plugin.globalState().state();
-        state.hintType = 0;
 
         int gameType = gameTypeIn == 0 ? LocUtil.randomInt(1, 5) : gameTypeIn;
         Component header;
@@ -46,38 +45,44 @@ public final class ChatGameManager {
                 if (equationType == 1) state.chatGameSolution = String.valueOf(a + b * c);
                 else if (equationType == 2) state.chatGameSolution = String.valueOf(a * b * c);
                 else state.chatGameSolution = String.valueOf(a * b - c);
+                if (state.chatGameSolution.equals("67")) {
+                    start(0);
+                    return;
+                }
                 prompt = msg.get("chatgames.quick-math." + key,
                         "a", String.valueOf(a), "b", String.valueOf(b), "c", String.valueOf(c));
             }
             case 3 -> {
                 header = msg.get("chatgames.guess-number.header");
                 state.chatGameSolution = String.valueOf(LocUtil.randomInt(1, 200));
+                if (state.chatGameSolution.equals("67")) {
+                    start(0);
+                    return;
+                }
                 prompt = msg.get("chatgames.guess-number.prompt");
                 state.hintType = 1;
             }
             case 4 -> {
                 header = msg.get("chatgames.syllogism.header");
-                Map<String, String> entries = msg.rawMap("chatgames.syllogism.entries");
-                List<String> keys = List.copyOf(entries.keySet());
-                if (keys.isEmpty()) return;
-                String key = keys.get(LocUtil.randomInt(0, keys.size() - 1));
-                state.chatGameSolution = entries.get(key);
-                prompt = msg.get("chatgames.syllogism.prompt", "question", key);
+                List<Map<?, ?>> entries = msg.rawMapList("chatgames.syllogism.entries");
+                if (entries.isEmpty()) return;
+                Map<?, ?> entry = entries.get(LocUtil.randomInt(0, entries.size() - 1));
+                state.chatGameSolution = String.valueOf(entry.get("answer"));
+                prompt = msg.get("chatgames.syllogism.prompt", "question", String.valueOf(entry.get("question")));
             }
             case 5 -> {
                 header = msg.get("chatgames.riddle.header");
-                Map<String, String> entries = msg.rawMap("chatgames.riddle.entries");
-                List<String> keys = List.copyOf(entries.keySet());
-                if (keys.isEmpty()) return;
-                String key = keys.get(LocUtil.randomInt(0, keys.size() - 1));
-                state.chatGameSolution = entries.get(key);
-                prompt = msg.get("chatgames.riddle.prompt", "question", key);
+                List<Map<?, ?>> entries = msg.rawMapList("chatgames.riddle.entries");
+                if (entries.isEmpty()) return;
+                Map<?, ?> entry = entries.get(LocUtil.randomInt(0, entries.size() - 1));
+                state.chatGameSolution = String.valueOf(entry.get("answer"));
+                prompt = msg.get("chatgames.riddle.prompt", "question", String.valueOf(entry.get("question")));
             }
             case 2 -> {
                 header = msg.get("chatgames.scramble.header");
                 List<String> words = msg.rawList("chatgames.scramble.words");
                 if (words.isEmpty()) return;
-                String word = words.get(LocUtil.randomInt(0, words.size() - 1));
+                String word = words.size() == 1 ? words.get(0) : words.get(LocUtil.randomInt(0, words.size() - 2));
                 char[] chars = word.toCharArray();
                 for (int i = 0; i < 20; i++) {
                     int i1 = LocUtil.randomInt(0, chars.length - 1);
@@ -117,7 +122,7 @@ public final class ChatGameManager {
             if (treeType >= 90) logInc *= 1.5;
             if (treeType >= 100) logInc *= 1.5;
 
-            String fmt = NumberFormat.getIntegerInstance(Locale.US).format(Math.round(logInc));
+            String fmt = com.barfl.treecutters.util.NumFmt.format(logInc);
             plugin.getServer().broadcast(msg.get("chatgames.winner", "player", player.getName(), "answer", state.chatGameSolution));
             plugin.getServer().broadcast(msg.get("chatgames.earned", "amount", fmt));
 

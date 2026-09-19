@@ -34,7 +34,7 @@ public final class StatShopMenu {
     }
 
     private String fmt(double v) {
-        return NumberFormat.getIntegerInstance(Locale.US).format(Math.round(v));
+        return com.barfl.treecutters.util.NumFmt.format(v);
     }
 
     public void open(Player player) {
@@ -151,6 +151,7 @@ public final class StatShopMenu {
         ItemStack tile = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         ItemMeta meta = tile.getItemMeta();
         meta.displayName(Component.empty());
+        meta.setHideTooltip(true);
         tile.setItemMeta(meta);
         for (int i = 0; i < inv.getSize(); i++) inv.setItem(i, tile.clone());
     }
@@ -200,9 +201,13 @@ public final class StatShopMenu {
 
             if (iconKey.equals("treeType")) {
                 PlayerSession session = plugin.data().session(player.getUniqueId());
-                if (!session.treeRegenerating) {
-                    plugin.growth().regrow(player);
+                if (session.treeRegenerating) {
+                    return;
                 }
+                if (plugin.schematics() != null && session.roomPos != null) {
+                    plugin.schematics().pasteAt(session.roomPos);
+                }
+                plugin.growth().regrow(player);
             }
             if (pdc.has(keys.prestige, PersistentDataType.INTEGER)) {
                 data.logs = 0;

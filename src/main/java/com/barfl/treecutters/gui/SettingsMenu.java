@@ -42,6 +42,7 @@ public final class SettingsMenu {
         ItemStack tile = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         ItemMeta tileMeta = tile.getItemMeta();
         tileMeta.displayName(Component.empty());
+        tileMeta.setHideTooltip(true);
         tile.setItemMeta(tileMeta);
         for (int i = 0; i < inv.getSize(); i++) inv.setItem(i, tile.clone());
 
