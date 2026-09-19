@@ -8,6 +8,7 @@ public final class GlobalState {
     public double stockValue = 600_000;
     public final List<Double> historicalStocks = new ArrayList<>();
     public double weatherMachineLogs = 0;
+    public boolean cityPasted = false;
 
     public transient int weatherType = 0;
     public transient int lotteryTime = 0;

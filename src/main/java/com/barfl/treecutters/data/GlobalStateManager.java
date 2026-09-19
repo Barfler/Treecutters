@@ -28,6 +28,7 @@ public final class GlobalStateManager {
         YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
         s.stockValue = yml.getDouble("stockValue", 600_000);
         s.weatherMachineLogs = yml.getDouble("weatherMachineLogs", 0);
+        s.cityPasted = yml.getBoolean("cityPasted", false);
         for (Double d : yml.getDoubleList("historicalStocks")) {
             s.historicalStocks.add(d);
         }
@@ -38,6 +39,7 @@ public final class GlobalStateManager {
         YamlConfiguration yml = new YamlConfiguration();
         yml.set("stockValue", state.stockValue);
         yml.set("weatherMachineLogs", state.weatherMachineLogs);
+        yml.set("cityPasted", state.cityPasted);
         yml.set("historicalStocks", state.historicalStocks);
         try {
             yml.save(file);

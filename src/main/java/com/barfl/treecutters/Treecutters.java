@@ -133,6 +133,13 @@ public final class Treecutters extends JavaPlugin {
 
         stockMarket.updateValue();
 
+        if (schematicPaster != null && schematicPaster.isCityReady() && !globalStateManager.state().cityPasted) {
+            schematicPaster.pasteCity();
+            globalStateManager.state().cityPasted = true;
+            globalStateManager.save();
+            getLogger().info("Pasted the city schematic (first boot).");
+        }
+
         getLogger().info("Treecutters enabled" + (roomManager != null ? " (" + roomManager.available() + " rooms available)" : ""));
     }
 
